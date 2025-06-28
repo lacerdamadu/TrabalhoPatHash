@@ -90,14 +90,15 @@ TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc){
                 return (CriaNoInt(i, &p, t, k[i-1]));
             }
         } 
-       
+        
+        /*Se ele não for externo usamos a própria chave do nó pra comparar com a palavra a ser inserida*/
         if (k[i-1] >= (*t)->NO.NExterno.Chave[i-1]){ 
             return (CriaNoInt(i, t, &p, k[i-1]));
         } else { 
             return (CriaNoInt(i, &p, t, (*t)->NO.NExterno.Chave[i-1]));
         }
     } 
-    else { 
+    else { /*Caso seja um nó interno que não atende a condição de cima*/
         if (k[(*t)->NO.NInterno.Index-1] >= (*t)->NO.NInterno.Referencia){
             (*t)->NO.NInterno.Dir = InsereEntre(k,&(*t)->NO.NInterno.Dir,i, IdDoc);
         } else {
@@ -110,27 +111,23 @@ TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc){
 TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){ 
     TipoArvore p;
     int i;
-    if (*t == NULL) {
-     
+    if (*t == NULL) { /*Caso não tenha nada*/
         return (CriaNoExt(k,IdDoc));
     } else { 
         p = *t;
-        while (!EExterno(p)) { 
-           
-            if (k[p->NO.NInterno.Index-1] >= p->NO.NInterno.Referencia){
-
+        while (!EExterno(p)) {     /*Equanto não for externo, vamos procurando por um*/
+            if (k[p->NO.NInterno.Index-1] >= p->NO.NInterno.Referencia){ /*se a posição indice do nó interno da palavra a ser inserida for maior ou igual ao indice vamos procurar pela direita*/
                 p = p->NO.NInterno.Dir;
-            } else {
-                
+            } else { /*Caso contrário procuramos pela esquerda*/
                 p = p->NO.NInterno.Esq;
             }
         }
 
         /* acha o primeiro caracter diferente */
         i = 1;
-        while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++;     
+        while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++; /*Enquanto i não ultrapassar o tamanho máximo da palavra, as posições de k e da palavra do nó externo forem iguais e a string não tiver acabado, continuamos mudando de posição*/    
 
-        if (i > D || (k[i-1] == '\0')) {
+        if (i > D || (k[i-1] == '\0')) { /*Condições que indicam que a palavra é repetida*/
             LInsere(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
             return (*t); 
         } else {
