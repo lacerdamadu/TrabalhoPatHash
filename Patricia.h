@@ -4,6 +4,7 @@
 // Rafael Resende - 589*
 // Pedro Miranda - 4***
 
+#include "IdInvertidoPat.h"
 #include <stdio.h>
 #include <stdlib.h> 
 #include <sys/time.h>
@@ -26,8 +27,11 @@ typedef struct TipoPatNo {
             char Referencia;
             TipoIndexAmp Index;
             TipoArvore Esq, Dir;
-        } NInterno ;
-        Palavra Chave;
+        } NInterno;
+        struct {
+            Palavra Chave;
+            TLista IdInvDaPalavra;
+        } NExterno;   
     } NO;
 } TipoPatNo;
 
@@ -43,7 +47,7 @@ void Pesquisa(Palavra k, TipoArvore t);
 
 /*Inserção*/
 TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i);
-TipoArvore Insere(Palavra k, TipoArvore *t); 
+TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc); 
 
 /*Impressão*/
 void Imprimepat(TipoArvore t); //Imprime mostrando os índicies e referências dos nós internos

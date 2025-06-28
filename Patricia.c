@@ -17,7 +17,8 @@ void Imprimepat(TipoArvore t){
         printf("Direita:\n");
         Imprimepat(t->NO.NInterno.Dir);
     } else {
-        printf("externo - chave %s\n", t->NO.Chave);
+        printf("externo - chave %s\n", t->NO.NExterno.Chave);
+        LImprime(&t->NO.NExterno.IdInvDaPalavra);
     }
 }
 
@@ -29,7 +30,7 @@ void ImprimeOrd(TipoArvore t){
         ImprimeOrd(t->NO.NInterno.Esq);
         ImprimeOrd(t->NO.NInterno.Dir);
     } else {
-        printf("%s\n", t->NO.Chave);
+        printf("%s\n", t->NO.NExterno.Chave);
     }
 }
 
@@ -54,13 +55,14 @@ TipoArvore CriaNoExt(Palavra k){
     TipoArvore p;
     p = (TipoArvore)malloc(sizeof(TipoPatNo));
     p->nt = Externo; 
-    strcpy(p->NO.Chave, k); 
+    strcpy(p->NO.NExterno.Chave, k); 
+    FLVazia(&p->NO.NExterno.IdInvDaPalavra);
     return p;
 }  
 
 void Pesquisa(Palavra k, TipoArvore t){ 
     if (EExterno(t)){ /*Se chegamos em um nó externo, ou ele é a palavra que estamos procurando ou ele não existe na árvore*/
-        if (strcmp(k, t->NO.Chave) == 0){ 
+        if (strcmp(k, t->NO.NExterno.Chave) == 0){ 
             printf("Elemento encontrado\n");
         } else { 
             printf("Elemento nao encontrado\n");
@@ -74,12 +76,12 @@ void Pesquisa(Palavra k, TipoArvore t){
     }
 } 
 
-TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i){ //acho que ok
+TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i){ 
     TipoArvore p;
-    if (EExterno(*t) || i < (*t)->NO.NInterno.Index) {
+    if (EExterno(*t) || i < (*t)->NO.NInterno.Index) { /*Se o nó for externo ou se i for menor que o índicie do nó interno*/
         p = CriaNoExt(k);/* cria um novo no externo */
 
-        if(!(EExterno(*t))){
+        if(!(EExterno(*t))){ /*Tratamento para caso o nó não seja externo*/
             if (k[i-1] < (*t)->NO.NInterno.Referencia){ 
                 return (CriaNoInt(i, t, &p, k[i-1]));
             } else { 
@@ -87,10 +89,10 @@ TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i){ //acho que ok
             }
         } 
        
-        if (k[i-1] >= (*t)->NO.Chave[i-1]){ 
+        if (k[i-1] >= (*t)->NO.NExterno.Chave[i-1]){ 
             return (CriaNoInt(i, t, &p, k[i-1]));
         } else { 
-            return (CriaNoInt(i, &p, t, (*t)->NO.Chave[i-1]));
+            return (CriaNoInt(i, &p, t, (*t)->NO.NExterno.Chave[i-1]));
         }
     } 
     else { 
@@ -103,7 +105,7 @@ TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i){ //acho que ok
   }
 }
 
-TipoArvore Insere(Palavra k, TipoArvore *t){ //acho que ok
+TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){ 
     TipoArvore p;
     int i;
     if (*t == NULL) {
@@ -124,9 +126,10 @@ TipoArvore Insere(Palavra k, TipoArvore *t){ //acho que ok
 
         /* acha o primeiro caracter diferente */
         i = 1;
-        while (((i <= D) && (k[i-1] == p->NO.Chave[i-1])) && (k[i-1] != '\0')) i++;     
+        while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++;     
 
-        if (i > D || (k[i-1] == '\0')) { 
+        if (i > D || (k[i-1] == '\0')) {
+            CresceQuantidade(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
             printf("Erro: chave ja esta na arvore\n");  
             return (*t); 
         } else {
@@ -139,22 +142,29 @@ int main(){
 
     TipoArvore arvteste = NULL;
 
-    int novaspalavras, numpesquisas;
+    int quantidadedocs, novaspalavras, numpesquisas;
 
-    printf("Quantas palavras gostaria de inserir?\n");
-    scanf("%d", &novaspalavras);
+    printf("quantos docs vc gostaria de digitar?\n");
+    scanf("%d", &quantidadedocs);
 
-    Palavra aux;
+    for(int j = 0; j < quantidadedocs; j++){
 
-    for(int i = 0; i < novaspalavras; i++){
-        printf("Digite a palavra %d:\n", i);
-        scanf("%s", aux);
-        
-        arvteste = Insere(aux, &arvteste);
+        printf("Quantas palavras gostaria de inserir?\n");
+        scanf("%d", &novaspalavras);
+
+        Palavra aux;
+
+        for(int i = 0; i < novaspalavras; i++){
+            printf("Digite a palavra %d:\n", i);
+            scanf("%s", aux);
+            
+            arvteste = Insere(aux, &arvteste, j);
+        }
     }
-
     printf("Quantas palavras gostaria de pesquisar?\n");
     scanf("%d", &numpesquisas);
+
+    Palavra aux;
 
     for(int i = 0; i < numpesquisas; i++){
         printf("Digite a palavra %d:\n", i);
