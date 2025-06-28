@@ -231,3 +231,27 @@ void TabelaHashInvertido(Hash* Celulas,int TamHASH){
     for (int i = 0; i < Count; i++)
         ImprimeRegistro(RG[i]);
 }
+void PesquisaIndiceInvertidoHash(Hash* Tabela, int* Peso, char* Palavra, int TamHASH) {
+    int pos = CodificaRegistroHash(Peso, Palavra) % TamHASH;
+
+    for (int i = 0; i < TamHASH; i++) {
+        int idx = (pos + i) % TamHASH;
+        CelulaHash* atual = Tabela[idx].PriPosicao->ProxCel;
+        while (atual != NULL) {
+            if (strcmp(atual->CelulaZ.PrimeiraZHash->RegistroHash.Palavra, Palavra) == 0) {
+                CelulaZHash* z = atual->CelulaZ.PrimeiraZHash;
+                while (z != NULL) {
+                    if (strcmp(z->RegistroHash.Palavra, Palavra) == 0) {
+                        ImprimeRegistro(z->RegistroHash);
+                    }
+                    z = z->ProxZHash;
+                }
+                return;
+            }
+            atual = atual->ProxCel;
+        }
+    }
+
+    printf("Palavra '%s' não encontrada na Hash.\n", Palavra);
+}
+

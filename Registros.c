@@ -15,28 +15,3 @@ void SetRegistro(Registro* RG,int Doc,char* Palavra){
     strcpy((*RG).Palavra,Palavra);
 }
 
-// void RecebeArquivo(){
-//     FILE *arquivo = fopen("Arquivo1.txt","r");
-
-//     if (arquivo == NULL) {
-//         perror("Erro ao abrir o arquivo");
-//     }
-
-//     char linha[TamLinha];
-//     int doc = 1;
-//     // Lê linha por linha
-//     while (fgets(linha, sizeof(linha), arquivo)) {
-//         // Remove \n se existir
-//         linha[strcspn(linha, "\n")] = '\0';
-
-//         // Separa palavras usando espaço como delimitador
-//         char *palavra = strtok(linha, " ");
-//         while (palavra != NULL) {
-//             printf("- %s | %d\n", palavra,doc);
-//             doc += 1;
-//             palavra = strtok(NULL, " ");
-//         }
-//     }
-
-//     fclose(arquivo);
-// }

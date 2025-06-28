@@ -30,7 +30,7 @@ void ImprimeOrd(TipoArvore t){
         ImprimeOrd(t->NO.NInterno.Esq);
         ImprimeOrd(t->NO.NInterno.Dir);
     } else {
-        printf("%s\n", t->NO.NExterno.Chave);
+        printf("%s:", t->NO.NExterno.Chave);
         LImprime(&t->NO.NExterno.IdInvDaPalavra);
     }
 }
@@ -135,43 +135,3 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
         }
     }
 }
-
-int main(){
-
-    TipoArvore arvteste = NULL;
-
-    int quantidadedocs, novaspalavras, numpesquisas;
-
-    printf("quantos docs vc gostaria de digitar?\n");
-    scanf("%d", &quantidadedocs);
-
-    for(int j = 0; j < quantidadedocs; j++){
-
-        printf("Quantas palavras gostaria de inserir?\n");
-        scanf("%d", &novaspalavras);
-
-        Palavra aux;
-
-        for(int i = 0; i < novaspalavras; i++){
-            printf("Digite a palavra %d:\n", i);
-            scanf("%s", aux);
-            
-            arvteste = Insere(aux, &arvteste, j+1);
-        }
-    }
-    printf("Quantas palavras gostaria de pesquisar?\n");
-    scanf("%d", &numpesquisas);
-
-    Palavra aux;
-
-    for(int i = 0; i < numpesquisas; i++){
-        printf("Digite a palavra %d:\n", i);
-        scanf("%s", aux);
-        Pesquisa(aux, arvteste);
-    }
-
-    //Imprimepat(arvteste);
-    ImprimeOrd(arvteste);
-
-    return 0;
-} 

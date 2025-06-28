@@ -6,20 +6,28 @@
 #include "Hash.h"
 
 // Remove pontuação, números, transforma em minúsculas
+//não consegui fazer remover acentos tbm, então bom que queremos usar só o ingles mesmo
 void limpar_linha(char *linha) {
     int i = 0, j = 0;
     while (linha[i]) {
-        if (isalpha(linha[i])) {
-            linha[j++] = tolower(linha[i]);
-        } else {
+        if(isspace(linha[i])) {  // Mantém espaços
             linha[j++] = ' ';
+            i++;
+            continue;
+        }
+        // Passo 1:converter para minúscula
+        char c = tolower((unsigned char)linha[i]); 
+        
+        // Passo 2:remove números e pontuação
+        if (isalpha(c)) {
+            linha[j++] = c;
         }
         i++;
     }
     linha[j] = '\0';
 }
 
-// Stopwords simples
+// Stopwords simples, peguei os exemplos da internet
 const char *stopwords[] = {
     "the", "is", "at", "which", "on", "a", "an", "and", "or", "for", "of", "in", "to",
     "with", "this", "that", "these", "those", "be", "been", "was", "were", "it", "its",

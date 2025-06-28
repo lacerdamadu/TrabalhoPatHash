@@ -4,7 +4,8 @@
 #include "Registros.h"
 #include "Hash.h"
 
-// Função que processa entrada.txt e limpa os arquivos listados
+// Função que processa entrada e limpa os arquivos
 void tratar_arquivo_para_insercao(const char *caminho, int idDoc, int *Peso, Hash *TabelaHash);
-
+void limpar_linha(char *linha);
+int eh_stopword(const char *palavra);
 #endif

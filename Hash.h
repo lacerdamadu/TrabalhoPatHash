@@ -41,4 +41,6 @@ int CompararPalavas(const void *a,const void *b);
 int CompararDocumento(const void *a, const void *b);
 
 void TabelaHashInvertido(Hash* Celulas,int TamHASH);
+void PesquisaIndiceInvertidoHash(Hash* Tabela, int* Peso, char* Palavra, int TamHASH);
+
 #endif  

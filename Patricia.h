@@ -4,6 +4,9 @@
 // Rafael Resende - 589*
 // Pedro Miranda - 4***
 
+#ifndef PATRICIA_H
+#define PATRICIA_H
+
 #include "IdInvertidoPat.h"
 #include <stdio.h>
 #include <stdlib.h> 
@@ -52,3 +55,5 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc);
 /*Impressão*/
 void Imprimepat(TipoArvore t); //Imprime mostrando os índicies e referências dos nós internos
 void ImprimeOrd(TipoArvore t); //Imprime os elementos da Patrícia em ordem
+
+#endif 
