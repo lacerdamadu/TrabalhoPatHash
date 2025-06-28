@@ -31,6 +31,7 @@ void ImprimeOrd(TipoArvore t){
         ImprimeOrd(t->NO.NInterno.Dir);
     } else {
         printf("%s\n", t->NO.NExterno.Chave);
+        LImprime(&t->NO.NExterno.IdInvDaPalavra);
     }
 }
 
@@ -51,12 +52,13 @@ TipoArvore CriaNoInt(int i, TipoArvore *Esq,  TipoArvore *Dir, char Ref){
     return p;
 } 
 
-TipoArvore CriaNoExt(Palavra k){ 
+TipoArvore CriaNoExt(Palavra k, int IdDoc){ 
     TipoArvore p;
     p = (TipoArvore)malloc(sizeof(TipoPatNo));
     p->nt = Externo; 
     strcpy(p->NO.NExterno.Chave, k); 
     FLVazia(&p->NO.NExterno.IdInvDaPalavra);
+    LInsere(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
     return p;
 }  
 
@@ -76,10 +78,10 @@ void Pesquisa(Palavra k, TipoArvore t){
     }
 } 
 
-TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i){ 
+TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc){ 
     TipoArvore p;
     if (EExterno(*t) || i < (*t)->NO.NInterno.Index) { /*Se o nó for externo ou se i for menor que o índicie do nó interno*/
-        p = CriaNoExt(k);/* cria um novo no externo */
+        p = CriaNoExt(k, IdDoc);/* cria um novo no externo */
 
         if(!(EExterno(*t))){ /*Tratamento para caso o nó não seja externo*/
             if (k[i-1] < (*t)->NO.NInterno.Referencia){ 
@@ -97,9 +99,9 @@ TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i){
     } 
     else { 
         if (k[(*t)->NO.NInterno.Index-1] >= (*t)->NO.NInterno.Referencia){
-            (*t)->NO.NInterno.Dir = InsereEntre(k,&(*t)->NO.NInterno.Dir,i);
+            (*t)->NO.NInterno.Dir = InsereEntre(k,&(*t)->NO.NInterno.Dir,i, IdDoc);
         } else {
-            (*t)->NO.NInterno.Esq = InsereEntre(k,&(*t)->NO.NInterno.Esq,i);
+            (*t)->NO.NInterno.Esq = InsereEntre(k,&(*t)->NO.NInterno.Esq,i, IdDoc);
         }
         return (*t);
   }
@@ -110,7 +112,7 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
     int i;
     if (*t == NULL) {
      
-        return (CriaNoExt(k));
+        return (CriaNoExt(k,IdDoc));
     } else { 
         p = *t;
         while (!EExterno(p)) { 
@@ -129,11 +131,10 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
         while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++;     
 
         if (i > D || (k[i-1] == '\0')) {
-            CresceQuantidade(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
-            printf("Erro: chave ja esta na arvore\n");  
+            LInsere(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
             return (*t); 
         } else {
-            return (InsereEntre(k, t, i));
+            return (InsereEntre(k, t, i, IdDoc));
         }
     }
 }
@@ -158,7 +159,7 @@ int main(){
             printf("Digite a palavra %d:\n", i);
             scanf("%s", aux);
             
-            arvteste = Insere(aux, &arvteste, j);
+            arvteste = Insere(aux, &arvteste, j+1);
         }
     }
     printf("Quantas palavras gostaria de pesquisar?\n");
@@ -172,7 +173,7 @@ int main(){
         Pesquisa(aux, arvteste);
     }
 
-    Imprimepat(arvteste);
+    //Imprimepat(arvteste);
     ImprimeOrd(arvteste);
 
     return 0;
