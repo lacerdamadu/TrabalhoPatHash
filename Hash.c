@@ -5,6 +5,8 @@
 #include <math.h>
 
 #include "Hash.h"
+#include "Registros.h"
+#include "PreHash.h"
 
 
 void SetCelulaHash(Hash* Celula){
@@ -115,7 +117,7 @@ int CodificaRegistroHash(int* Peso,char* Palavra){
     }
 }
 
-int FatorCargaHash(double ElemetentosArmazenados,double TamHASH){// Calcala o fator de carga que a tabela hash pode ter
+int FatorCargaHash(double ElemetentosArmazenados,double TamHASH){// Calcula o fator de carga que a tabela hash pode ter
     return ((int)ceil(ElemetentosArmazenados/TamHASH));
 }
 

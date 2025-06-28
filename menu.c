@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "tratamento.h"
+#include "Registros.h"
+#include "PreHash.h"
+#include "Hash.h"
 #include "menu.h"
 
 #define Aux1 2000
@@ -24,7 +28,6 @@ void Menu(){
 void EntradaDeArquivo(Hash* TabelaHash,int* Peso){
     char DocEntrada[30];
     
-    // //Para eu nao digitar toda vez para rodar depois descomentar
     // strcpy(DocEntrada,"entrada.txt");
 
     // Pede o nome do arquivo de entrada
@@ -54,50 +57,22 @@ void EntradaDeArquivo(Hash* TabelaHash,int* Peso){
     fgets(NChar,sizeof(NChar),ArquivoEntrada);
     N = atoi(NChar);
 
-    // Fica repetindo passando por cada documento 
-    for (int i = 1; i <= N; i++){
-        char caminho[TamLinha];
-        strcpy(caminho,"PastaArquivos/"); //Pasta onde vai estar os arquivos do POC
+for (int i = 1; i <= N; i++) {
+    char caminho[TamLinha];
+    strcpy(caminho,"PastaArquivos/");
 
-        char ArquivosLinha[TamLinha];
-        fgets(ArquivosLinha,sizeof(ArquivosLinha),ArquivoEntrada);// Pega o nome do arquivo 
+    char ArquivosLinha[TamLinha];
+    fgets(ArquivosLinha, sizeof(ArquivosLinha), ArquivoEntrada); // Pega o nome do arquivo
 
-        ArquivosLinha[strcspn(ArquivosLinha,"\n")] = '\0'; //Retira o "\n" e coloca '\0'
+    ArquivosLinha[strcspn(ArquivosLinha, "\n")] = '\0'; // Remove \n
 
-        strcat(caminho,ArquivosLinha);//Junta o caminho e o arquivo criando onde o arquivo esta
+    strcat(caminho, ArquivosLinha); // Monta o caminho completo
 
-        FILE *ArquivoPOC = fopen(caminho,"r");// Abre o arquivo do POC
-
-        if (ArquivoPOC == NULL){
-            perror("Erro em o POC");
-            return;
-        }
-        
-        char linha[TamLinha];
-
-        while (fgets(linha,sizeof(linha),ArquivoPOC)){// Fica pecorendo o documento ate acabar e quardando a linha do txt
-            linha[strcspn(linha,"\n")] ='\0'; // retira o "\n"
-
-            char *palavra = strtok(linha, " ");//Separa a linha por espacos     
-            while (palavra != NULL){//pecorre a linha mudando a palavra                 
-                Registro RG;    
+    // Trata e insere na hash
+    tratar_arquivo_para_insercao(caminho, i, Peso, TabelaHash);
+}
 
 
-                /*Aqui é para tratar as palavras, ta na variavel "palavra" RAFAEL(arrombado)*/
-
-
-                SetRegistro(&RG,i,palavra);
-
-                /*Aqui os registros vao estar prontas para inserir na hash e patricia*/
-                /*i e o documento onde a palavra esta*/
-                
-                EnsereTabelaHash(TabelaHash,Peso,RG,Aux1,Aux2);
-
-                palavra = strtok(NULL," ");
-            }
-        }
-        fclose(ArquivoPOC);//fecha o arquivo do POC
-    }
     fclose(ArquivoEntrada);//fecha o arquivo de Entrada
     return;
 }

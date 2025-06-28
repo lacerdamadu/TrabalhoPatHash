@@ -8,6 +8,7 @@
 #include "Hash.h"
 #include "PreHash.h"
 #include "Registros.h"
+#include "Tratamento.h"
 
 int main(){
     Menu();   
