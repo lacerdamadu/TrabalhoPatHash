@@ -26,11 +26,12 @@ void CresceQuantidade(TLista *pLista, int IdDoc){
     IdInvertido* pAux;
     pAux = pLista->pPrimeiro->pProx;
 
-    while(pAux->pProx != NULL && pAux->pProx->Item.IdDoc != IdDoc){
+    while(pAux->pProx != NULL && pAux->Item.IdDoc != IdDoc){
         pAux = pAux->pProx;
     }
 
     pAux->Item.Quantidade++;
+    
 }
 
 void LImprime(TLista* pLista){

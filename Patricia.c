@@ -126,15 +126,7 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
         return (CriaNoExt(k,IdDoc));
     } else { 
         p = *t;
-
-        // while (!EExterno(p)) {     /*Equanto não for externo, vamos procurando por um*/
-        //     if (k[p->NO.NInterno.Index-1] >= p->NO.NInterno.Referencia){ /*se a posição indice do nó interno da palavra a ser inserida for maior ou igual ao indice vamos procurar pela direita*/
-        //         p = p->NO.NInterno.Dir;
-        //     } else { /*Caso contrário procuramos pela esquerda*/
-        //         p = p->NO.NInterno.Esq;
-        //     }
-        // }
-
+        
         p = ProcuraExterno(p, k);
 
         /* acha o primeiro caracter diferente */
@@ -142,7 +134,7 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
         while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++; /*Enquanto i não ultrapassar o tamanho máximo da palavra, as posições de k e da palavra do nó externo forem iguais e a string não tiver acabado, continuamos mudando de posição*/ 
         
 
-        if (i > D || (k[i-1] == '\0')) { /*Condições que indicam que a palavra é repetida*/
+        if ((k[i-1] == '\0') && (p->NO.NExterno.Chave[i-1] == '\0')) { /*Condições que indicam que a palavra é repetida*/
             LInsere(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
             return (*t); 
         } else {
@@ -181,12 +173,11 @@ int main(){
     Palavra aux;
 
     for(int i = 0; i < numpesquisas; i++){
-        printf("Digite a palavra %d:\n", i);
         scanf("%s", aux);
         Pesquisa(aux, arvteste);
     }
 
-    // Imprimepat(arvteste);
+    Imprimepat(arvteste);
     ImprimeOrd(arvteste);
 
     return 0;
