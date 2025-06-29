@@ -1,7 +1,13 @@
+//Ratos Moinhados + Ziviani adaptado
+// Ana Clara - 5896
+// Maria Eduarda - 5920
+// Rafael Resende - 589*
+// Pedro Miranda - 4912
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "tratamento.h"
+#include "Tratamento.h"
 #include "Patricia.h"
 #include "Registros.h"
 

@@ -1,4 +1,9 @@
-#include "IdInvertidopat.h"
+//Ratos Moinhados + Ziviani adaptado
+// Ana Clara - 5896
+// Maria Eduarda - 5920
+// Rafael Resende - 589*
+// Pedro Miranda - 4912
+#include "IdInvertidoPat.h"
 
 void FLVazia(TLista* pLista){
     pLista->pPrimeiro = (Apontador) malloc(sizeof(IdInvertido));

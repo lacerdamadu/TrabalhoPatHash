@@ -6,7 +6,7 @@
 #include "Registros.h"
 #include "PreHash.h" 
 #include "Hash.h"
-#include "tratamento.h"
+#include "Tratamento.h"
 #include "Patricia.h"
 #include "EntradaPatricia.h"
 #include "menu.h"
