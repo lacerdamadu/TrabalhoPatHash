@@ -1,17 +1,20 @@
 //Ratos Moinhados + Ziviani adaptado
 // Ana Clara - 5896
 // Maria Eduarda - 5920
-// Rafael Resende - 589*
-// Pedro Miranda - 4***
+// Rafael Resende - 5891
+// Pedro Miranda - 4912
 
-#ifndef PATRICIA_H
-#define PATRICIA_H
-
-#include "IdInvertidoPat.h"
 #include <stdio.h>
 #include <stdlib.h> 
 #include <sys/time.h>
 #include <string.h>
+
+#include "IdInvertidoPat.h"
+
+#ifndef PATRICIA_H
+#define PATRICIA_H
+
+
 #define D 50   /*tamanho máximo da palavra*/
 typedef char Palavra[D]; 
 typedef unsigned char TipoIndexAmp;
@@ -50,10 +53,12 @@ void Pesquisa(Palavra k, TipoArvore t);
 
 /*Inserção*/
 TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc);
-TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc); 
+TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc);
 
 /*Impressão*/
 void Imprimepat(TipoArvore t); //Imprime mostrando os índicies e referências dos nós internos
 void ImprimeOrd(TipoArvore t); //Imprime os elementos da Patrícia em ordem
 
+TipoArvore BuscaPatricia(TipoArvore t, const char *k);
+int LDocumentoExiste(TLista *lista, int IdDoc);
 #endif 

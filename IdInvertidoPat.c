@@ -10,16 +10,29 @@ int LEhVazia(TLista* pLista){
     return (pLista->pPrimeiro == pLista->pUltimo);
 }
 
-void LInsere(TLista *pLista, int IdDoc){
-    if(IdDoc == pLista->pUltimo->Item.IdDoc){
-         CresceQuantidade(pLista, IdDoc);
-         return;
+void LInsere(TLista *lista, int IdDoc) {
+    // Verifica se já existe o documento
+    Apontador atual = lista->pPrimeiro->pProx;
+    while(atual != NULL) {
+        if(atual->Item.IdDoc == IdDoc) {
+            atual->Item.Quantidade++;
+            return;
+        }
+        atual = atual->pProx;
     }
-    pLista->pUltimo->pProx = (Apontador) malloc(sizeof(IdInvertido));
-    pLista->pUltimo = pLista->pUltimo->pProx;
-    pLista->pUltimo->Item.IdDoc = IdDoc;
-    pLista->pUltimo->Item.Quantidade = 1;
-    pLista->pUltimo->pProx = NULL;
+    
+    // Se não existir, insere novo
+    Apontador novo = (Apontador)malloc(sizeof(IdInvertido));
+    novo->Item.IdDoc = IdDoc;
+    novo->Item.Quantidade = 1;
+    novo->pProx = NULL;
+    
+    if(LEhVazia(lista)) {
+        lista->pPrimeiro->pProx = novo;
+    } else {
+        lista->pUltimo->pProx = novo;
+    }
+    lista->pUltimo = novo;
 }
 
 void CresceQuantidade(TLista *pLista, int IdDoc){
@@ -40,4 +53,12 @@ void LImprime(TLista* pLista){
         printf("<%d,%d>\n", pAux->Item.Quantidade, pAux->Item.IdDoc);
         pAux = pAux->pProx; 
     }
+}
+int LDocumentoExiste(TLista *lista, int IdDoc) {
+    Apontador p = lista->pPrimeiro->pProx;
+    while(p != NULL) {
+        if(p->Item.IdDoc == IdDoc) return 1;
+        p = p->pProx;
+    }
+    return 0;
 }

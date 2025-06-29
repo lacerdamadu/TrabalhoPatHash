@@ -26,7 +26,7 @@ void LInsere(TLista *pLista, int IdDoc);
 void CresceQuantidade(TLista* pLista, int IdDoc);
 
 // int LRetira(TLista* pLista, Informacoes *pItem);
-
+int LDocumentoExiste(TLista *lista, int IdDoc);
 void LImprime(TLista* pLista);
 
 #endif
