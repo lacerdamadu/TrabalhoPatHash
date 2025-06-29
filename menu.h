@@ -4,11 +4,13 @@
 #include "Registros.h"
 #include "PreHash.h"
 #include "Hash.h"
-#include "Patricia.h"
+
 
 #define TamLinha 256
 
+typedef struct TipoPatNo* TipoArvore;
 void Menu();
+
 
 void EntradaDeArquivo(Hash* TabelaHash,int* Peso);
 

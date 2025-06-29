@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
 #ifndef IDINVERTIDOPAT_H
 #define IDINVERTIDOPAT_H
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct {
     int Quantidade;
@@ -26,7 +26,6 @@ void LInsere(TLista *pLista, int IdDoc);
 void CresceQuantidade(TLista* pLista, int IdDoc);
 
 // int LRetira(TLista* pLista, Informacoes *pItem);
-int LDocumentoExiste(TLista *lista, int IdDoc);
-void LImprime(TLista* pLista);
 
+void LImprime(TLista* pLista);
 #endif
