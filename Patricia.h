@@ -43,7 +43,9 @@ short EExterno(TipoArvore p); //Verifica se o nó é externo
 TipoArvore CriaNoInt(int i, TipoArvore *Esq,  TipoArvore *Dir, char Ref); 
 TipoArvore CriaNoExt(Palavra k, int IdDoc);
 
+/*Pesquisas*/
 void Pesquisa(Palavra k, TipoArvore t);
+TipoArvore ProcuraExterno(TipoArvore p, Palavra k);
 
 /*Inserção*/
 TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc);

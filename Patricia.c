@@ -6,6 +6,18 @@
 
 #include "Patricia.h"
 
+TipoArvore ProcuraExterno(TipoArvore p, Palavra k){
+    while (!EExterno(p)) {     /*Equanto não for externo, vamos procurando por um*/
+        if (k[p->NO.NInterno.Index-1] >= p->NO.NInterno.Referencia){ /*se a posição indice do nó interno da palavra a ser inserida for maior ou igual ao indice vamos procurar pela direita*/
+            p = p->NO.NInterno.Dir;
+        } else { /*Caso contrário procuramos pela esquerda*/
+            p = p->NO.NInterno.Esq;
+        }
+    }  
+
+    return p;
+}
+
 void Imprimepat(TipoArvore t){
     if(t == NULL){
         return;
@@ -82,20 +94,19 @@ TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc){
     TipoArvore p;
     if (EExterno(*t) || i < (*t)->NO.NInterno.Index) { /*Se o nó for externo ou se i for menor que o índicie do nó interno*/
         p = CriaNoExt(k, IdDoc);/* cria um novo no externo */
+        TipoArvore aux;
 
         if(!(EExterno(*t))){ /*Tratamento para caso o nó não seja externo*/
-            if (k[i-1] < (*t)->NO.NInterno.Referencia){ 
-                return (CriaNoInt(i, t, &p, k[i-1]));
-            } else { 
-                return (CriaNoInt(i, &p, t, k[i-1]));
-            }
-        } 
+            aux = ProcuraExterno(*t, k); //Caso o nó nao seja externo, ele procura o externo que foi usado para comparar 
+        } else {
+            aux = *t;
+        }
         
         /*Se ele não for externo usamos a própria chave do nó pra comparar com a palavra a ser inserida*/
-        if (k[i-1] >= (*t)->NO.NExterno.Chave[i-1]){ 
+        if (k[i-1] >= aux->NO.NExterno.Chave[i-1]){ 
             return (CriaNoInt(i, t, &p, k[i-1]));
         } else { 
-            return (CriaNoInt(i, &p, t, (*t)->NO.NExterno.Chave[i-1]));
+            return (CriaNoInt(i, &p, t, aux->NO.NExterno.Chave[i-1]));
         }
     } 
     else { /*Caso seja um nó interno que não atende a condição de cima*/
@@ -115,17 +126,21 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
         return (CriaNoExt(k,IdDoc));
     } else { 
         p = *t;
-        while (!EExterno(p)) {     /*Equanto não for externo, vamos procurando por um*/
-            if (k[p->NO.NInterno.Index-1] >= p->NO.NInterno.Referencia){ /*se a posição indice do nó interno da palavra a ser inserida for maior ou igual ao indice vamos procurar pela direita*/
-                p = p->NO.NInterno.Dir;
-            } else { /*Caso contrário procuramos pela esquerda*/
-                p = p->NO.NInterno.Esq;
-            }
-        }
+
+        // while (!EExterno(p)) {     /*Equanto não for externo, vamos procurando por um*/
+        //     if (k[p->NO.NInterno.Index-1] >= p->NO.NInterno.Referencia){ /*se a posição indice do nó interno da palavra a ser inserida for maior ou igual ao indice vamos procurar pela direita*/
+        //         p = p->NO.NInterno.Dir;
+        //     } else { /*Caso contrário procuramos pela esquerda*/
+        //         p = p->NO.NInterno.Esq;
+        //     }
+        // }
+
+        p = ProcuraExterno(p, k);
 
         /* acha o primeiro caracter diferente */
         i = 1;
-        while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++; /*Enquanto i não ultrapassar o tamanho máximo da palavra, as posições de k e da palavra do nó externo forem iguais e a string não tiver acabado, continuamos mudando de posição*/    
+        while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++; /*Enquanto i não ultrapassar o tamanho máximo da palavra, as posições de k e da palavra do nó externo forem iguais e a string não tiver acabado, continuamos mudando de posição*/ 
+        
 
         if (i > D || (k[i-1] == '\0')) { /*Condições que indicam que a palavra é repetida*/
             LInsere(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
@@ -159,6 +174,7 @@ int main(){
             arvteste = Insere(aux, &arvteste, j+1);
         }
     }
+
     printf("Quantas palavras gostaria de pesquisar?\n");
     scanf("%d", &numpesquisas);
 
@@ -170,7 +186,7 @@ int main(){
         Pesquisa(aux, arvteste);
     }
 
-    //Imprimepat(arvteste);
+    // Imprimepat(arvteste);
     ImprimeOrd(arvteste);
 
     return 0;
