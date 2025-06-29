@@ -20,22 +20,25 @@ int VerificaCelulaVaziaHash(Hash* Celula){
     return(Celula->PriPosicao == Celula->UltPosicao);
 }
 
-int EnsereCelulaHash(Hash* Celula,Registro RG){
+int EnsereCelulaHash(Hash* Celula,Registro RG,int* CompInsercaoHash){
     if (VerificaCelulaVaziaHash(Celula)){//Caso nao tenha nada na lista encadeada insere na primeira 
         Celula->PriPosicao->ProxCel = (CelulaHash*) malloc(sizeof(CelulaHash));
         Celula->UltPosicao = Celula->PriPosicao->ProxCel;
         SetZHash(&Celula->UltPosicao->CelulaZ); 
-        EnsereZHash(&Celula->UltPosicao->CelulaZ,RG);
+        EnsereZHash(&Celula->UltPosicao->CelulaZ,RG,CompInsercaoHash);
         Celula->UltPosicao->Posicao = 1;
         Celula->UltPosicao->ProxCel = NULL;
+        *CompInsercaoHash += 2;
         return 1;
     }
     else{//caso a lista nao esteja vazia verifica se ja tem a mesma palavra e acresenta +1 na quantidade
         CelulaHash* CelulaAux;
         CelulaAux = Celula->PriPosicao->ProxCel; 
         while (CelulaAux != NULL){
+            *CompInsercaoHash += 1;
             if (PesquisaPalavraZHash(&CelulaAux->CelulaZ,RG)){
-                EnsereZHash(&CelulaAux->CelulaZ,RG);
+                *CompInsercaoHash += 1;
+                EnsereZHash(&CelulaAux->CelulaZ,RG,CompInsercaoHash);
                 return 1;
             }
             CelulaAux = CelulaAux->ProxCel;
@@ -47,7 +50,7 @@ int EnsereCelulaHash(Hash* Celula,Registro RG){
     Celula->UltPosicao = Celula->UltPosicao->ProxCel;
     Celula->UltPosicao->ProxCel = NULL;
     SetZHash(&Celula->UltPosicao->CelulaZ);
-    EnsereZHash(&Celula->UltPosicao->CelulaZ,RG);
+    EnsereZHash(&Celula->UltPosicao->CelulaZ,RG,CompInsercaoHash);
     return 1;
 }
 
@@ -128,27 +131,32 @@ void SetPesos(int* Peso){
     }
 }
 
-void EnsereTabelaHash(Hash* Celulas,int* Peso,Registro RG,int ElemetentosArmazenados,int TamHASH){
+void EnsereTabelaHash(Hash* Celulas,int* Peso,Registro RG,int ElemetentosArmazenados,int TamHASH,int* CompInsercaoHash){
     int Posicao = CodificaRegistroHash(Peso,RG.Palavra) %  TamHash;
     int FatorDeCarga = FatorCargaHash(ElemetentosArmazenados,TamHASH);
     int PosicaoAux = Posicao;
     do{    
         if(Posicao >= TamHash){//Caso a posicao seja invalida (Maior que o tamanho da hash)
+            *CompInsercaoHash += 1;
             Posicao = 0;
         }
         if (VerificaCelulaVaziaHash(&Celulas[Posicao])){// Caso nao tenha nada na posicao da tabela hash insere
-            EnsereCelulaHash(&Celulas[Posicao],RG);
+            *CompInsercaoHash += 1;
+            EnsereCelulaHash(&Celulas[Posicao],RG,CompInsercaoHash);
             return;
         }
         else if (PesquisaCelulaHash(&Celulas[Posicao],RG.Palavra)){// Caso nao esteja vazia a lista verifica se tem o mesmo registro (Palavra e Documento)
-            EnsereCelulaHash(&Celulas[Posicao],RG);
+            *CompInsercaoHash += 1;
+            EnsereCelulaHash(&Celulas[Posicao],RG,CompInsercaoHash);
             return;
         }
         else if (Celulas[Posicao].UltPosicao->Posicao < FatorDeCarga){// Caso chegue aqui esse registro é novo e tem que verificar se pode colocar na lista(Carga)
-            EnsereCelulaHash(&Celulas[Posicao],RG);
+            *CompInsercaoHash += 1;
+            EnsereCelulaHash(&Celulas[Posicao],RG,CompInsercaoHash);
             return;
         }
         else if(Posicao <= TamHash){//Nao tem como colocar naquele indice vai para o proximo
+            *CompInsercaoHash += 1;
             Posicao += 1;
         }
     } while (Posicao != PosicaoAux);
@@ -231,17 +239,22 @@ void TabelaHashInvertido(Hash* Celulas,int TamHASH){
     for (int i = 0; i < Count; i++)
         ImprimeRegistro(RG[i]);
 }
-void PesquisaIndiceInvertidoHash(Hash* Tabela, int* Peso, char* Palavra, int TamHASH) {
+void PesquisaIndiceInvertidoHash(Hash* Tabela, int* Peso, char* Palavra, int TamHASH,int* CompPesquisaHash) {
     int pos = CodificaRegistroHash(Peso, Palavra) % TamHASH;
-
+    *CompPesquisaHash = 0;
     for (int i = 0; i < TamHASH; i++) {
         int idx = (pos + i) % TamHASH;
+        *CompPesquisaHash += 1;
         CelulaHash* atual = Tabela[idx].PriPosicao->ProxCel;
         while (atual != NULL) {
+            *CompPesquisaHash += 1;
             if (strcmp(atual->CelulaZ.PrimeiraZHash->RegistroHash.Palavra, Palavra) == 0) {
+                *CompPesquisaHash += 2;
                 CelulaZHash* z = atual->CelulaZ.PrimeiraZHash;
                 while (z != NULL) {
+                    *CompPesquisaHash += 1;
                     if (strcmp(z->RegistroHash.Palavra, Palavra) == 0) {
+                        *CompPesquisaHash += 1;
                         ImprimeRegistro(z->RegistroHash);
                     }
                     z = z->ProxZHash;

@@ -44,7 +44,7 @@ int eh_stopword(const char *palavra) {
     return 0;
 }
 
-void tratar_arquivo_para_insercao(const char *caminho, int idDoc, int *Peso, Hash *TabelaHash) {
+void tratar_arquivo_para_insercao(const char *caminho, int idDoc, int *Peso, Hash *TabelaHash,int* CompInsercaoHash) {
     FILE *fp = fopen(caminho, "r");
     if (!fp) {
         printf("Erro ao abrir %s\n", caminho);
@@ -55,13 +55,15 @@ void tratar_arquivo_para_insercao(const char *caminho, int idDoc, int *Peso, Has
     while (fgets(linha, sizeof(linha), fp)) {
         linha[strcspn(linha, "\n")] = '\0';
         limpar_linha(linha);
-
+        *CompInsercaoHash += 1;
         char *palavra = strtok(linha, " ");
         while (palavra != NULL) {
+            *CompInsercaoHash += 1;
             if (!eh_stopword(palavra) && strlen(palavra) > 1) {
+                *CompInsercaoHash += 2;
                 Registro RG;
                 SetRegistro(&RG, idDoc, palavra);
-                EnsereTabelaHash(TabelaHash, Peso, RG, 2000, 701); // usa Aux1 e Aux2 fixos
+                EnsereTabelaHash(TabelaHash, Peso, RG, 2000, 701,CompInsercaoHash); // usa Aux1 e Aux2 fixos
             }
             palavra = strtok(NULL, " ");
         }

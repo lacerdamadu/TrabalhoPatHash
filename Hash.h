@@ -21,7 +21,7 @@ typedef struct {
 
 void SetCelulaHash(Hash* Celula);
 int VerificaCelulaVaziaHash(Hash* Celula);
-int EnsereCelulaHash(Hash* Celula,Registro RG);
+int EnsereCelulaHash(Hash* Celula,Registro RG,int* CompInsercaoHash);
 void ImprimeCelulaHash(Hash* Celula);
 int CalculaFatorCargaCelula(Hash* Celula);
 int PesquisaCelulaHash(Hash* Celula,char* Palavra);
@@ -34,13 +34,13 @@ void TabelaHashImprime(Hash* Celulas,int Tam);
 int CodificaRegistroHash(int* Peso,char* Palavra);
 int FatorCargaHash(double ElemetentosArmazenados,double TamHASH);
 int PesquisaTabelaHash(Hash* Celulas,int* Peso,char* Palavra,int TamHASH);
-void EnsereTabelaHash(Hash* Celulas,int* Peso,Registro RG,int ElemetentosArmazenados,int TamHASH);
+void EnsereTabelaHash(Hash* Celulas,int* Peso,Registro RG,int ElemetentosArmazenados,int TamHASH,int* CompInsercaoHash);
 int TabelaHashQuantPalavras(Hash* Celulas,int TamHASH);
 
 int CompararPalavas(const void *a,const void *b);
 int CompararDocumento(const void *a, const void *b);
 
 void TabelaHashInvertido(Hash* Celulas,int TamHASH);
-void PesquisaIndiceInvertidoHash(Hash* Tabela, int* Peso, char* Palavra, int TamHASH);
+void PesquisaIndiceInvertidoHash(Hash* Tabela, int* Peso, char* Palavra, int TamHASH,int* CompPesquisaHash);
 
 #endif  

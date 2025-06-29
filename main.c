@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 #include "menu.h"
 #include "Hash.h"
 #include "PreHash.h"

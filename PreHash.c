@@ -61,10 +61,10 @@ int PesquisaPalavraZHash(ZHash* CelulaZ, Registro RG){
 }
 
 
-void EnsereZHash(ZHash* CelulaZ, Registro RG){
+void EnsereZHash(ZHash* CelulaZ, Registro RG,int* CompInsercaoHash){
     if (VerificaSeVaziaZHash(CelulaZ)){
         CelulaZ->PrimeiraZHash->RegistroHash = RG;
-        //CelulaZ->PrimeiraZHash->RegistroHash.Quantidade = 1;
+        *CompInsercaoHash += 1;
         return;
     }
     else{
@@ -74,6 +74,7 @@ void EnsereZHash(ZHash* CelulaZ, Registro RG){
         while (CelulaZAux != NULL){
             if ((strcmp(CelulaZAux->RegistroHash.Palavra,RG.Palavra) == 0) && CelulaZAux->RegistroHash.Documento == RG.Documento){
                 CelulaZAux->RegistroHash.Quantidade += 1;
+                *CompInsercaoHash += 4;
                 return;
             }
             CelulaZAux = CelulaZAux->ProxZHash;

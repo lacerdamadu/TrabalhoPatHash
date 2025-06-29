@@ -12,7 +12,7 @@ typedef struct TipoPatNo* TipoArvore;
 void Menu();
 
 
-void EntradaDeArquivo(Hash* TabelaHash,int* Peso);
+void EntradaDeArquivo(Hash* TabelaHash,int* Peso,int* CompInsercaoHash);
 
 void EntradaDeArquivoPatricia(TipoArvore *raiz);  // Nova função para Patricia
 

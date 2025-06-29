@@ -21,6 +21,6 @@ int PesquisaZHash(ZHash* CelulaZ, Registro RG);
 int PesquisaPalavraZHash(ZHash* CelulaZ, Registro RG);
 int QuantidadePalavrasZHash(ZHash* CelulaZ);
 
-void EnsereZHash(ZHash* CelulaZ, Registro RG);
+void EnsereZHash(ZHash* CelulaZ, Registro RG,int* CompInsercaoHash);
 
 #endif
