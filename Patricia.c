@@ -44,8 +44,9 @@ void ImprimeOrd(TipoArvore t){
         ImprimeOrd(t->NO.NInterno.Esq);
         ImprimeOrd(t->NO.NInterno.Dir);
     } else {
-        printf("%s ", t->NO.NExterno.Chave);
+        printf("%s - ", t->NO.NExterno.Chave);
         LImprime(&t->NO.NExterno.IdInvDaPalavra);
+        printf("\n");
     }
 }
 
@@ -128,8 +129,7 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
         return (CriaNoExt(k,IdDoc));
     } else { 
         p = *t;
-
-
+        
         p = ProcuraExterno(p, k);
 
         /* acha o primeiro caracter diferente */
@@ -137,7 +137,7 @@ TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){
         while (((i <= D) && (k[i-1] == p->NO.NExterno.Chave[i-1])) && (k[i-1] != '\0')) i++; /*Enquanto i não ultrapassar o tamanho máximo da palavra, as posições de k e da palavra do nó externo forem iguais e a string não tiver acabado, continuamos mudando de posição*/ 
         
 
-        if (i > D || (k[i-1] == '\0')) { /*Condições que indicam que a palavra é repetida*/
+        if ((k[i-1] == '\0') && (p->NO.NExterno.Chave[i-1] == '\0')) { /*Condições que indicam que a palavra é repetida*/
             LInsere(&p->NO.NExterno.IdInvDaPalavra, IdDoc);
             return (*t); 
         } else {

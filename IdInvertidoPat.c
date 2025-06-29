@@ -26,7 +26,7 @@ void CresceQuantidade(TLista *pLista, int IdDoc){
     IdInvertido* pAux;
     pAux = pLista->pPrimeiro->pProx;
 
-    while(pAux->pProx != NULL && pAux->pProx->Item.IdDoc != IdDoc){
+    while(pAux->pProx != NULL && pAux->Item.IdDoc != IdDoc){
         pAux = pAux->pProx;
     }
 
@@ -37,7 +37,7 @@ void LImprime(TLista* pLista){
     Apontador pAux;
     pAux = pLista->pPrimeiro->pProx;
     while (pAux != NULL){
-        printf("<%d,%d>\n", pAux->Item.Quantidade, pAux->Item.IdDoc);
+        printf("<%d,%d> ", pAux->Item.Quantidade, pAux->Item.IdDoc);
         pAux = pAux->pProx; 
     }
 }
