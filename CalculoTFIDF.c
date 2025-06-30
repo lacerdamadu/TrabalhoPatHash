@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 #include "Patricia.h"
+#include "IdInvertidoPat.h"
 #include "CalculoTFIDF.h"
+#include "Hash.h"
+#include "PreHash.h"
 
 int CalculaOcorrencia(TipoArvore t, int i, Palavra k){//Calcula o número de ocorrências de uma palavra em um documento
     IdInvertido* pAux;
@@ -62,7 +65,7 @@ int CalculaPeso(int NumOcorrenciasi, int NumDocs, int NumTotalArq){
     return 0;
 }
 
-void CalculaRelevancia(TipoArvore t, Palavra *k, Calculo *VetorRelevancias, int NumeroDeTermosDistintos[]){
+void CalculaRelevancia(TipoArvore t, Palavra *k, CalculoTFIDF *VetorRelevancias, int NumeroDeTermosDistintos[]){
     size_t tamanho = sizeof(k) / sizeof(k[0]);
     size_t NumeroDeDocs = sizeof(VetorRelevancias) / sizeof(VetorRelevancias[0]); //Calcula o número de documentos no total
     int somatorio = 0;
@@ -70,6 +73,63 @@ void CalculaRelevancia(TipoArvore t, Palavra *k, Calculo *VetorRelevancias, int 
         for(int i=0; i<tamanho; i++){
             int Oc = CalculaOcorrencia(t, j+1, k[i]);
             int NumDocs = CalculaNumDocs(t, k[i]);
+            somatorio += CalculaPeso(Oc, NumDocs, NumeroDeDocs);
+        }
+        VetorRelevancias[j].relevancia = somatorio/NumeroDeTermosDistintos[j];
+    }
+}
+
+int CalculaOcorrenciaHash(Hash* Celulas, int *Peso, char *Palavra, int TamHASH, int idDoc){
+    int Posicao = CodificaRegistroHash(Peso,Palavra) %  TamHash;
+    for (int i = 0; i < TamHASH; i++){
+        if (PesquisaCelulaHash(&Celulas[i],Palavra));{
+            CelulaHash* CelulaAux;
+            CelulaAux = Celulas->PriPosicao->ProxCel;
+            while (CelulaAux != NULL){
+                if (strcmp(CelulaAux->CelulaZ.PrimeiraZHash->RegistroHash.Palavra,Palavra) == 0){
+                    CelulaZHash* CelulaZAuX2;
+                    CelulaZAuX2 = CelulaAux->CelulaZ.PrimeiraZHash;
+                    while (CelulaZAuX2 != NULL){
+                        if(CelulaZAuX2->RegistroHash.Documento == idDoc){
+                            return CelulaZAuX2->RegistroHash.Quantidade;
+                        }
+                        CelulaZAuX2 = CelulaZAuX2->ProxZHash;
+                    }
+                }  
+                CelulaAux = CelulaAux->ProxCel;
+            }
+            
+        }
+    }
+    return 0;
+}
+
+int CalculaNumDocsHash(Hash* Celulas, int *Peso, char *Palavra, int TamHASH){
+    int Posicao = CodificaRegistroHash(Peso,Palavra) %  TamHash;
+    for (int i = 0; i < TamHASH; i++){
+        if (PesquisaCelulaHash(&Celulas[i],Palavra));{
+            CelulaHash* CelulaAux;
+            CelulaAux = Celulas->PriPosicao->ProxCel;
+            while (CelulaAux != NULL){
+                if (strcmp(CelulaAux->CelulaZ.PrimeiraZHash->RegistroHash.Palavra,Palavra) == 0){
+                        return QuantidadePalavrasZHash(&CelulaAux->CelulaZ);
+                    }
+                }  
+                CelulaAux = CelulaAux->ProxCel;
+            }
+            
+        }
+    return 0;
+}
+
+void CalculaRelevanciaHash(Hash *Celulas, Palavra *k, CalculoTFIDF *VetorRelevancias, int NumeroDeTermosDistintos[], int *Peso, char *Palavra, int TamHASH ){
+    size_t tamanho = sizeof(k) / sizeof(k[0]);
+    size_t NumeroDeDocs = sizeof(VetorRelevancias) / sizeof(VetorRelevancias[0]); //Calcula o número de documentos no total
+    int somatorio = 0;
+    for(int j=0; j<NumeroDeDocs; j++){
+        for(int i=0; i<tamanho; i++){
+            int Oc = CalculaOcorrenciaHash(Celulas, Peso, Palavra, TamHASH, j+1);
+            int NumDocs = CalculaNumDocsHash(Celulas, Peso, Palavra, TamHASH);
             somatorio += CalculaPeso(Oc, NumDocs, NumeroDeDocs);
         }
         VetorRelevancias[j].relevancia = somatorio/NumeroDeTermosDistintos[j];
