@@ -1,5 +1,5 @@
-#define CALCULOTFIDF_H_
 #ifndef CALCULOTFIDF_H_
+#define CALCULOTFIDF_H_
 
 #include "EntradaPatricia.h"
 #include "Patricia.h"
