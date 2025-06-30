@@ -21,6 +21,8 @@ void Menu(){
     Hash TabelaHah[TamHash];
     SetTabelaHash(TabelaHah, TamHash);
     TipoArvore ArvorePatricia = NULL;
+    
+    int *PalavrasDistintas;
 
     printf("Bem-vinde ao sistema utilizado para o Estudo comparativo entre Árvore PATRICIA e Tabela HASH como estruturas para implementar arquivo invertido");
     int escolha = -1;
@@ -41,7 +43,10 @@ void Menu(){
                 printf("Não tem nada aqui ainda");
                 break;
             case 2:
-                EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash);
+                EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash, PalavrasDistintas);
+                for(int i = 0; i < 7; i++){
+                    printf("palavras distintas em %d: %d\n", i, PalavrasDistintas[i]);
+                }
                 break;
             case 3:
                 ImprimeOrd(ArvorePatricia);
@@ -55,7 +60,9 @@ void Menu(){
         }
     }
 
+
 }
+
 void RealizarBusca(TipoArvore *ArvorePatricia, Hash *TabelaHash, int *Peso){
     printf("Quantos termos voce deseja pesquisar?\n");
     int NumTermosBusca = 0;

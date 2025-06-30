@@ -13,7 +13,7 @@
 #include "Registros.h"
 #include "Hash.h"
 
-void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash) {
+void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash, int* PalavrasDistintas) {
     char DocEntrada[256];
     printf("Documento de entrada: ");
 
@@ -28,6 +28,14 @@ void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash
     if(fscanf(Arq, "%d\n", &num_arquivos) != 1) {
         fclose(Arq);
         return;
+    }
+
+    for(int j = 0; j < num_arquivos; j++){
+        PalavrasDistintas[j] = 0;
+    }
+
+    for(int j = 0; j < num_arquivos; j++){
+        printf("tem %d palavras no doc %d\n", PalavrasDistintas[j], j);
     }
 
 
@@ -56,6 +64,9 @@ void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash
             char *palavra = strtok(linha, " ");
             while(palavra != NULL) {
                 if(strlen(palavra) > 1 && !eh_stopword(palavra)) {
+                    if(!(PesquisaBin(palavra, *raiz))){
+                        PalavrasDistintas[i]++;
+                    }
                     Registro RG;
                     SetRegistro(&RG,i,palavra);
                     EnsereTabelaHash(TabelaHash, Peso, RG, 2000, 701); // usa Aux1 e Aux2 fixos
@@ -65,6 +76,9 @@ void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash
             }
         }
         fclose(fp);
+        for(int j = 0; j < num_arquivos; j++){
+            printf("tem %d palavras no doc %d\n", PalavrasDistintas[j], j);
+        }
     }
     fclose(Arq);
 }

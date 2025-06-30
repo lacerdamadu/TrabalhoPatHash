@@ -1,4 +1,2 @@
-3
-arquivo1.txt
-arquivo2.txt
-arquivo3.txt
+1
+bosta.txt

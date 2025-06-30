@@ -11,6 +11,6 @@
 #include "Patricia.h"
 #include "Hash.h"
 
-void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash);
+void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash, int* PalavrasDistintas);
 
 #endif

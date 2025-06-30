@@ -6,6 +6,8 @@
 #include "Hash.h"
 
 typedef struct TipoPatNo* TipoArvore;
+
 void Menu();
+void RealizarBusca(TipoArvore *ArvorePatricia, Hash *TabelaHash, int *Peso);
 
 #endif  

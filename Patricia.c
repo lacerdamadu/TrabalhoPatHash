@@ -93,6 +93,25 @@ void Pesquisa(Palavra k, TipoArvore t){
     }
 } 
 
+
+int PesquisaBin(Palavra k, TipoArvore t){ 
+    if(t == NULL){
+        return 0;
+    }
+    if (EExterno(t)){ /*Se chegamos em um nó externo, ou ele é a palavra que estamos procurando ou ele não existe na árvore*/
+        if (strcmp(k, t->NO.NExterno.Chave) == 0){ 
+            return 1;
+        } else { 
+            return 0;
+        }  
+    }
+    if (k[t->NO.NInterno.Index-1] < t->NO.NInterno.Referencia){ /*Vai cair aqui se estivermos em um nó interno. Para esse caso, se a posição Index-1 (que é o índicie armazenado no nó interno) da palavra for menor que a referência do nó interno, vamos procurar no filho a esquerda desse nó*/
+        PesquisaBin(k, t->NO.NInterno.Esq);
+    } else { /*Caso contrário, procuraremos no filho à direita*/
+        PesquisaBin(k, t->NO.NInterno.Dir);
+    }
+} 
+
 TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc){ 
     TipoArvore p;
     if (EExterno(*t) || i < (*t)->NO.NInterno.Index) { /*Se o nó for externo ou se i for menor que o índicie do nó interno*/
