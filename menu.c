@@ -68,8 +68,8 @@ void EntradaDeArquivo(NomeEntradas* nomeentradas){
     fclose(ArquivoEntrada);
 }
 
-void LerArquivos(NomeEntradas* nomeentrada,TipoArvore* raiz,
-    Hash* Celulas,int* Peso,int ElemetentosArmazenados,int TamHASH,int* CompInsercaoHash){
+void LerArquivos(NomeEntradas* nomeentrada, TipoArvore* raiz,
+    Hash* Celulas,int* Peso, int ElemetentosArmazenados, int TamHASH, int* CompInsercaoHash){
     for (int doc = 0; doc < nomeentrada->Quantidade; doc++){
         char LinhaArq[TamLin];
         char Caminho[256];
@@ -85,17 +85,19 @@ void LerArquivos(NomeEntradas* nomeentrada,TipoArvore* raiz,
         }  
         while (fgets(LinhaArq,sizeof(LinhaArq),Arq)){
             LinhaArq[strcspn(LinhaArq,"\n")] = '\0';
+
             limpar_linha(LinhaArq);
 
-            char* Palavra = strtok(LinhaArq, " ");
+            char* Palavraa = strtok(LinhaArq, " ");
 
-            while (Palavra != NULL){
+            while (Palavraa != NULL){
                 Registro RG;
-                SetRegistro(&RG,doc,Palavra);
+                SetRegistro(&RG,doc,Palavraa);
                 EnsereTabelaHash(Celulas,Peso,RG,Aux1,Aux2,CompInsercaoHash);
-                Insere(Palavra,raiz,doc);
+                Insere(Palavraa,raiz,doc);
 
-                Palavra = strtok(NULL, " ");
+                Palavraa = strtok(NULL, " ");
+    
             }
         }
         fclose(Arq);

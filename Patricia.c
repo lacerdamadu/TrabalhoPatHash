@@ -124,6 +124,9 @@ TipoArvore InsereEntre(Palavra k, TipoArvore *t, int i, int IdDoc){
 
 TipoArvore Insere(Palavra k, TipoArvore *t, int IdDoc){ 
     TipoArvore p;
+
+    printf("recebendo %s\n", k);
+
     int i;
     if (*t == NULL) { /*Caso não tenha nada*/
         return (CriaNoExt(k,IdDoc));
