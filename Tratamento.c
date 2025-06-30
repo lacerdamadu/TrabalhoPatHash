@@ -49,7 +49,7 @@ void tratar_arquivo_para_insercao(const char *caminho, int idDoc, int *Peso, Has
     if (!fp) {
         printf("Erro ao abrir %s\n", caminho);
         return;
-    }
+    }   
 
     char linha[1024];
     while (fgets(linha, sizeof(linha), fp)) {

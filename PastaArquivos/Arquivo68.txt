@@ -1,0 +1,3 @@
+An Instagram-Integrated Sticker Album as a Participation Incentive Strategy for the myMobiConf System
+Participatory Sensing Networks (PSNs) are systems where data-sending nodes consist of individuals with mobile devices. These systems often struggle with user engagement issues. myMobiConf—a PSN designed for event support—employs gamification strategies to address this challenge.
+Inspired by successful PSNs like Instagram and Brazil’s cultural affinity for sticker albums, this work proposes implementing an Instagram-integrated sticker album to enhance myMobiConf’s gamification framework.

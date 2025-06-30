@@ -1,0 +1,2 @@
+A Friend-Relevance-Based Recommendation System
+Event attendees often struggle to balance time between scheduled activities, meals, and side events. To address this challenge, this work proposes a solution that directs users to nearby restaurants matching their preferences. A key aspect of this solution involves identifying relevant friends—individuals whose recommendations carry greater influence in the selection process.

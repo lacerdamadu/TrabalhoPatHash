@@ -9,7 +9,8 @@
 #include "Registros.h"
 #include "Tratamento.h"
 
+
 int main(){
-    Menu();   
+    Menu();
     return 0;
 }

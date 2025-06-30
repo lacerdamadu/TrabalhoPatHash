@@ -1,7 +1,7 @@
 #ifndef REGISTROS_H
 #define REGISTROS_H
 
-#define TamPalavra 100
+#define TamPalavra 50
 
 
 typedef struct {

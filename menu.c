@@ -11,10 +11,96 @@
 #include "EntradaPatricia.h"
 #include "menu.h"
 
+#define TamLin 1024
 #define Aux1 2000
 #define Aux2 701
 
-void EntradaDeArquivo(Hash* TabelaHash, int* Peso,int* CompInsercaoHash);
+void InicializaNomeEntradas(NomeEntradas* nomeentradas, int N){
+    nomeentradas->Quantidade = N;
+    nomeentradas->Arquivo = malloc(N * sizeof(char *));
+    for (int i = 0; i < N; i++){
+        nomeentradas->Arquivo[i] = malloc(50 * sizeof(char));
+    }
+}
+
+void EntradaDeArquivo(NomeEntradas* nomeentradas){
+    char DocEntrada[TamLin];
+    printf("Digite o arquivo de entrada: ");
+    scanf("%s", DocEntrada);
+
+    FILE *ArquivoEntrada = fopen(DocEntrada, "r");
+    if (ArquivoEntrada == NULL){
+        perror("Erro ao abrir o arquivo");
+        return;
+    }
+
+    char NChar[TamPalavra];
+    if (fgets(NChar, sizeof(NChar), ArquivoEntrada) == NULL) {
+        printf("Erro ao ler o número de entradas\n");
+        fclose(ArquivoEntrada);
+        return;
+    }
+
+    int N = atoi(NChar);
+    if (N <= 0) {
+        printf("Número inválido de entradas: %d\n", N);
+        fclose(ArquivoEntrada);
+        return;
+    }
+
+    InicializaNomeEntradas(nomeentradas, N);
+
+    int contador = 0;
+    char linha[1024];
+
+    while (fgets(linha, sizeof(linha), ArquivoEntrada) && contador < N) {
+        linha[strcspn(linha, "\n")] = '\0';
+
+        char *palavra = strtok(linha, " ");
+        while (palavra != NULL && contador < N) {
+            strncpy(nomeentradas->Arquivo[contador], palavra, TamPalavra - 1);
+            nomeentradas->Arquivo[contador][TamPalavra - 1] = '\0';  // garante fim da string
+            contador++;
+            palavra = strtok(NULL, " ");
+        }
+    }
+
+    fclose(ArquivoEntrada);
+}
+
+void LerArquivos(NomeEntradas* nomeentrada,TipoArvore* raiz,
+    Hash* Celulas,int* Peso,int ElemetentosArmazenados,int TamHASH,int* CompInsercaoHash){
+    for (int doc = 0; doc < nomeentrada->Quantidade; doc++){
+        char LinhaArq[TamLin];
+        char Caminho[256];
+        strcpy(Caminho,"PastaArquivos/");
+
+
+        strcat(Caminho,nomeentrada->Arquivo[doc]);
+
+        FILE *Arq = fopen(Caminho,"r");
+        if (Arq == NULL){
+            perror("Erro ao abrir arquivo de entrada");
+            return ;
+        }  
+        while (fgets(LinhaArq,sizeof(LinhaArq),Arq)){
+            LinhaArq[strcspn(LinhaArq,"\n")] = '\0';
+            limpar_linha(LinhaArq);
+
+            char* Palavra = strtok(LinhaArq, " ");
+
+            while (Palavra != NULL){
+                Registro RG;
+                SetRegistro(&RG,doc,Palavra);
+                EnsereTabelaHash(Celulas,Peso,RG,Aux1,Aux2,CompInsercaoHash);
+                Insere(Palavra,raiz,doc);
+
+                Palavra = strtok(NULL, " ");
+            }
+        }
+        fclose(Arq);
+    }
+}
 
 void Menu(){
     int Peso[TamPalavra];
@@ -24,90 +110,12 @@ void Menu(){
     int CompPesquisaHash, CompInsercaoHash;
     TipoArvore ArvorePatricia = NULL;
 
-    int estruturaEscolhida = 0;
-    printf("===== ESCOLHA A ESTRUTURA =====\n");
-    printf("1 - Usar Hash\n");
-    printf("2 - Usar Patricia\n");
-    printf("Escolha: ");
-    scanf("%d", &estruturaEscolhida);
+    NomeEntradas nomoentradas;
+    EntradaDeArquivo(&nomoentradas);
 
+    LerArquivos(&nomoentradas,&ArvorePatricia,TabelaHah,Peso,Aux1,Aux2,&CompInsercaoHash);    
 
-    if (estruturaEscolhida == 1) {
-        printf("\n--- Usando estrutura HASH ---\n");
-        EntradaDeArquivo(TabelaHah, Peso, &CompInsercaoHash);
-        TabelaHashImprime(TabelaHah, TamHash);
-        TabelaHashInvertido(TabelaHah, TamHash);
-    } else if (estruturaEscolhida == 2) {
-        printf("\n--- Usando estrutura PATRICIA ---\n");
-        EntradaDeArquivoPatricia(&ArvorePatricia);
-        ImprimeOrd(ArvorePatricia);
-    } else {
-        printf("Opção inválida. Encerrando programa.\n");
-        return;
-    }
-
-    int desejaPesquisar = 0;
-    printf("\nDeseja realizar uma busca?\n");
-    printf("1 - Buscar na Hash\n");
-    printf("2 - Buscar na Patricia\n");
-    printf("0 - Sair\n");
-    printf("Escolha: ");
-    scanf("%d", &desejaPesquisar);
-    getchar();
-
-    if (desejaPesquisar == 1) {
-        char termo[TamPalavra];
-        printf("\nDigite uma palavra para buscar na Hash: ");
-        fgets(termo, sizeof(termo), stdin);
-        termo[strcspn(termo, "\n")] = '\0';
-        PesquisaIndiceInvertidoHash(TabelaHah, Peso, termo, TamHash, &CompPesquisaHash);
-        printf("Quantidade de comp pesquisa Hash %d\n",CompPesquisaHash);
-    } else if (desejaPesquisar == 2) {
-        char termo[TamPalavra];
-        printf("\nDigite uma palavra para buscar na Patricia: ");
-        fgets(termo, sizeof(termo), stdin);
-        termo[strcspn(termo, "\n")] = '\0';
-        Pesquisa(termo, ArvorePatricia);
-    } else {
-        printf("Saindo sem buscar.\n");
-    }
+    //TabelaHashImprime(TabelaHah,TamHash);
+    Imprimepat(ArvorePatricia);
 }
 
-void EntradaDeArquivo(Hash* TabelaHash,int* Peso,int* CompInsercaoHash){
-    char DocEntrada[30];
-    *CompInsercaoHash = 0;
-    printf("Digite o Documento de entrada:");
-    if(fgets(DocEntrada,sizeof(DocEntrada),stdin) == NULL){
-        printf("erro em abrir o arquivo %s",DocEntrada);
-        return;
-    }
-    DocEntrada[strcspn(DocEntrada,"\n")] = '\0';
-
-    FILE *ArquivoEntrada = fopen(DocEntrada,"r");
-
-    if (ArquivoEntrada == NULL){
-        perror("Erro em abrir o arquivo");
-        return;
-    }
-
-    char NChar[TamPalavra];
-    int N;
-    fgets(NChar,sizeof(NChar),ArquivoEntrada);
-    N = atoi(NChar);
-
-    for (int i = 1; i <= N; i++) {
-        char caminho[TamLinha];
-        strcpy(caminho,"PastaArquivos/");
-
-        char ArquivosLinha[TamLinha];
-        fgets(ArquivosLinha, sizeof(ArquivosLinha), ArquivoEntrada);
-        ArquivosLinha[strcspn(ArquivosLinha, "\n")] = '\0';
-
-        strcat(caminho, ArquivosLinha);
-        tratar_arquivo_para_insercao(caminho, i, Peso, TabelaHash,CompInsercaoHash);
-    }
-
-    fclose(ArquivoEntrada);
-    printf("Comparaçoes Inser hash %d\n",*CompInsercaoHash);
-    return;
-}

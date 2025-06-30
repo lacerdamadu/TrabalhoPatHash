@@ -54,3 +54,19 @@ while(fgets(linha, sizeof(linha), fp)) {
     }
     fclose(Arq);
 }
+// char NChar[TamPalavra];
+//     int N;
+//     fgets(NChar,sizeof(NChar),ArquivoEntrada);
+//     N = atoi(NChar);
+
+//     for (int i = 1; i <= N; i++) {
+//         char caminho[TamLinha];
+//         strcpy(caminho,"PastaArquivos/");
+
+//         char ArquivosLinha[TamLinha];
+//         fgets(ArquivosLinha, sizeof(ArquivosLinha), ArquivoEntrada);
+//         ArquivosLinha[strcspn(ArquivosLinha, "\n")] = '\0';
+
+//         strcat(caminho, ArquivosLinha);
+//         tratar_arquivo_para_insercao(caminho, i, Peso, TabelaHash);
+//     }
