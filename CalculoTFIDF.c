@@ -72,6 +72,6 @@ void CalculaRelevancia(TipoArvore t, Palavra *k, Calculo *VetorRelevancias, int 
             int NumDocs = CalculaNumDocs(t, k[i]);
             somatorio += CalculaPeso(Oc, NumDocs, NumeroDeDocs);
         }
-        *VetorRelevancias[j] = somatorio/NumeroDeTermosDistintos[j];
+        VetorRelevancias[j].relevancia = somatorio/NumeroDeTermosDistintos[j];
     }
 }
