@@ -1,7 +1,7 @@
 //Ratos Moinhados + Ziviani adaptado
 // Ana Clara - 5896
 // Maria Eduarda - 5920
-// Rafael Resende - 589*
+// Rafael Resende - 5891
 // Pedro Miranda - 4912
 #include <stdio.h>
 #include <string.h>
@@ -11,7 +11,6 @@
 #include "Hash.h"
 
 // Remove pontuação, números, transforma em minúsculas
-//não consegui fazer remover acentos tbm, então bom que queremos usar só o ingles mesmo
 void limpar_linha(char *linha) {
     int i = 0, j = 0;
     while (linha[i]) {
@@ -47,29 +46,4 @@ int eh_stopword(const char *palavra) {
         if (strcmp(palavra, stopwords[i]) == 0) return 1;
     }
     return 0;
-}
-
-void tratar_arquivo_para_insercao(const char *caminho, int idDoc, int *Peso, Hash *TabelaHash) {
-    FILE *fp = fopen(caminho, "r");
-    if (!fp) {
-        printf("Erro ao abrir %s\n", caminho);
-        return;
-    }
-
-    char linha[1024];
-    while (fgets(linha, sizeof(linha), fp)) {
-        linha[strcspn(linha, "\n")] = '\0';
-        limpar_linha(linha);
-
-        char *palavra = strtok(linha, " ");
-        while (palavra != NULL) {
-            if (!eh_stopword(palavra) && strlen(palavra) > 1) {
-                Registro RG;
-                SetRegistro(&RG, idDoc, palavra);
-                EnsereTabelaHash(TabelaHash, Peso, RG, 2000, 701); // usa Aux1 e Aux2 fixos
-            }
-            palavra = strtok(NULL, " ");
-        }
-    }
-    fclose(fp);
 }

@@ -7,14 +7,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "EntradaAqr.h"
 #include "Tratamento.h"
 #include "Patricia.h"
 #include "Registros.h"
+#include "Hash.h"
 
-void EntradaDeArquivoPatricia(TipoArvore *raiz) {
+void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash) {
     char DocEntrada[256];
     printf("Documento de entrada: ");
-    if(!fgets(DocEntrada, sizeof(DocEntrada), stdin)) return;
+
+    scanf("%s", DocEntrada);
+
     DocEntrada[strcspn(DocEntrada, "\n")] = '\0';
 
     FILE *Arq = fopen(DocEntrada, "r");
@@ -52,6 +56,9 @@ void EntradaDeArquivoPatricia(TipoArvore *raiz) {
             char *palavra = strtok(linha, " ");
             while(palavra != NULL) {
                 if(strlen(palavra) > 1 && !eh_stopword(palavra)) {
+                    Registro RG;
+                    SetRegistro(&RG,i,palavra);
+                    EnsereTabelaHash(TabelaHash, Peso, RG, 2000, 701); // usa Aux1 e Aux2 fixos
                     *raiz = Insere(palavra, raiz, i);
                 }
                 palavra = strtok(NULL, " "); // Próxima palavra

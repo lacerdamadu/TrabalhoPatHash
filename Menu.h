@@ -5,12 +5,7 @@
 #include "PreHash.h"
 #include "Hash.h"
 
-
-#define TamLinha 256
-
 typedef struct TipoPatNo* TipoArvore;
 void Menu();
-void EntradaDeArquivo(Hash* TabelaHash,int* Peso);
-void EntradaDeArquivoPatricia(TipoArvore *raiz);  // Nova função para Patricia
 
 #endif  
