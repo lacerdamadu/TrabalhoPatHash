@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/dudinha/FACULDADE/AEDSII/TP1",
-      "program": "/home/dudinha/FACULDADE/AEDSII/TP1/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "c:/Users/Pedro Miranda/Documents/Trabalhos Praticos/Aeds-2/TabalhoNovo/TrabalhoPatHash",
+      "program": "c:/Users/Pedro Miranda/Documents/Trabalhos Praticos/Aeds-2/TabalhoNovo/TrabalhoPatHash/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
