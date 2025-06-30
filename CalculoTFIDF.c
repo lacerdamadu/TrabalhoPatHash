@@ -61,7 +61,7 @@ int CalculaPeso(int NumOcorrenciasi, int NumDocs, int NumTotalArq){
     return 0;
 }
 
-void CalculaRelevancia(TipoArvore t, int NumTermosDistintos, Palavra k[], int *VetorRelevanciaDocs[], int NumeroDeTermosDistintos[]){
+void CalculaRelevancia(TipoArvore t, Palavra k[], int *VetorRelevanciaDocs[], int NumeroDeTermosDistintos[]){
     size_t tamanho = sizeof(k) / sizeof(k[0]);
     size_t NumeroDeDocs = sizeof(VetorRelevanciaDocs) / sizeof(VetorRelevanciaDocs[0]); //Calcula o número de documentos no total
     int somatorio = 0;
