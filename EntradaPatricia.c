@@ -52,6 +52,7 @@ void EntradaDeArquivoPatricia(TipoArvore *raiz) {
             char *palavra = strtok(linha, " ");
             while(palavra != NULL) {
                 if(strlen(palavra) > 1 && !eh_stopword(palavra)) {
+            
                     *raiz = Insere(palavra, raiz, i);
                 }
                 palavra = strtok(NULL, " "); // Próxima palavra
