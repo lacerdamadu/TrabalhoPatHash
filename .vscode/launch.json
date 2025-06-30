@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Pedro Miranda/Documents/Trabalhos Praticos/Aeds-2/Nova pasta/TrabalhoPatHash",
-      "program": "c:/Users/Pedro Miranda/Documents/Trabalhos Praticos/Aeds-2/Nova pasta/TrabalhoPatHash/build/Debug/outDebug",
+      "cwd": "c:/Users/Pedro Miranda/Documents/Trabalhos Praticos/Aeds-2/TabalhoNovo/TrabalhoPatHash",
+      "program": "c:/Users/Pedro Miranda/Documents/Trabalhos Praticos/Aeds-2/TabalhoNovo/TrabalhoPatHash/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
