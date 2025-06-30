@@ -25,10 +25,7 @@ void EntradaDeArquivoPatricia(TipoArvore *raiz) {
         fclose(Arq);
         return;
     }
-    int NumPalavrasArq[num_arquivos];
-    for(int j=0; j<num_arquivos; j++){
-        NumPalavrasArq[j] = 0;
-    }
+
 
     for(int i = 1; i <= num_arquivos; i++) {
         char caminho[256];
@@ -56,9 +53,6 @@ void EntradaDeArquivoPatricia(TipoArvore *raiz) {
             while(palavra != NULL) {
                 if(strlen(palavra) > 1 && !eh_stopword(palavra)) {
                     *raiz = Insere(palavra, raiz, i);
-                    if(PesquisaBin(palavra, raiz) == 0){
-                        NumPalavrasArq[i] += 1;
-                    }
                 }
                 palavra = strtok(NULL, " "); // Próxima palavra
             }

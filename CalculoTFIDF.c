@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "Patricia.h"
+#include "CalculoTFIDF.h"
 
 int CalculaOcorrencia(TipoArvore t, int i, Palavra k){//Calcula o número de ocorrências de uma palavra em um documento
     IdInvertido* pAux;
@@ -61,9 +62,9 @@ int CalculaPeso(int NumOcorrenciasi, int NumDocs, int NumTotalArq){
     return 0;
 }
 
-void CalculaRelevancia(TipoArvore t, Palavra k[], int *VetorRelevanciaDocs[], int NumeroDeTermosDistintos[]){
+void CalculaRelevancia(TipoArvore t, Palavra *k, Calculo *VetorRelevancias, int NumeroDeTermosDistintos[]){
     size_t tamanho = sizeof(k) / sizeof(k[0]);
-    size_t NumeroDeDocs = sizeof(VetorRelevanciaDocs) / sizeof(VetorRelevanciaDocs[0]); //Calcula o número de documentos no total
+    size_t NumeroDeDocs = sizeof(VetorRelevancias) / sizeof(VetorRelevancias[0]); //Calcula o número de documentos no total
     int somatorio = 0;
     for(int j=0; j<NumeroDeDocs; j++){
         for(int i=0; i<tamanho; i++){
@@ -71,6 +72,6 @@ void CalculaRelevancia(TipoArvore t, Palavra k[], int *VetorRelevanciaDocs[], in
             int NumDocs = CalculaNumDocs(t, k[i]);
             somatorio += CalculaPeso(Oc, NumDocs, NumeroDeDocs);
         }
-        *VetorRelevanciaDocs[j] = somatorio/NumeroDeTermosDistintos[j];
+        *VetorRelevancias[j] = somatorio/NumeroDeTermosDistintos[j];
     }
 }
