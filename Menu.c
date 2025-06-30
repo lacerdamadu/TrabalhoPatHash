@@ -9,7 +9,7 @@
 #include "Tratamento.h"
 #include "Patricia.h"
 #include "EntradaPatricia.h"
-#include "menu.h"
+#include "Menu.h"
 
 #define Aux1 2000
 #define Aux2 701
@@ -30,7 +30,7 @@ void Menu(){
     printf("Escolha: ");
     scanf("%d", &estruturaEscolhida);
     getchar();
-
+    
     if (estruturaEscolhida == 1) {
         printf("\n--- Usando estrutura HASH ---\n");
         EntradaDeArquivo(TabelaHah, Peso);

@@ -10,10 +10,7 @@
 
 typedef struct TipoPatNo* TipoArvore;
 void Menu();
-
-
 void EntradaDeArquivo(Hash* TabelaHash,int* Peso);
-
 void EntradaDeArquivoPatricia(TipoArvore *raiz);  // Nova função para Patricia
 
 #endif  

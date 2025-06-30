@@ -47,6 +47,7 @@ TipoArvore CriaNoExt(Palavra k, int IdDoc);
 
 /*Pesquisas*/
 void Pesquisa(Palavra k, TipoArvore t);
+int PesquisaBin(Palavra k, TipoArvore t);
 TipoArvore ProcuraExterno(TipoArvore p, Palavra k);
 
 /*Inserção*/

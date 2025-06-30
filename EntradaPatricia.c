@@ -19,11 +19,15 @@ void EntradaDeArquivoPatricia(TipoArvore *raiz) {
 
     FILE *Arq = fopen(DocEntrada, "r");
     if(!Arq) { perror("Erro ao abrir arquivo de entrada"); return; }
-
+   
     int num_arquivos;
     if(fscanf(Arq, "%d\n", &num_arquivos) != 1) {
         fclose(Arq);
         return;
+    }
+    int NumPalavrasArq[num_arquivos];
+    for(int j=0; j<num_arquivos; j++){
+        NumPalavrasArq[j] = 0;
     }
 
     for(int i = 1; i <= num_arquivos; i++) {
@@ -41,21 +45,24 @@ void EntradaDeArquivoPatricia(TipoArvore *raiz) {
         }
 
         char linha[1024]; // Buffer para linha completa
-while(fgets(linha, sizeof(linha), fp)) {
-    linha[strcspn(linha, "\n")] = '\0'; // Remove quebra de linha
+        while(fgets(linha, sizeof(linha), fp)){
+            linha[strcspn(linha, "\n")] = '\0'; // Remove quebra de linha
     
-    //Aplica limpeza
-    limpar_linha(linha); 
-    
-    //Divide em palavras por espaço
-    char *palavra = strtok(linha, " ");
-    while(palavra != NULL) {
-        if(strlen(palavra) > 1 && !eh_stopword(palavra)) {
-            *raiz = Insere(palavra, raiz, i);
+            //Aplica limpeza
+            limpar_linha(linha); 
+            
+            //Divide em palavras por espaço
+            char *palavra = strtok(linha, " ");
+            while(palavra != NULL) {
+                if(strlen(palavra) > 1 && !eh_stopword(palavra)) {
+                    *raiz = Insere(palavra, raiz, i);
+                    if(PesquisaBin(palavra, raiz) == 0){
+                        NumPalavrasArq[i] += 1;
+                    }
+                }
+                palavra = strtok(NULL, " "); // Próxima palavra
+            }
         }
-        palavra = strtok(NULL, " "); // Próxima palavra
-    }
-}
         fclose(fp);
     }
     fclose(Arq);
