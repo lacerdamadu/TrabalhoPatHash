@@ -7,7 +7,7 @@
 #ifndef HASH_H
 #define HASH_H
 
-#define TamHash 11
+#define TamHash 701
 
 #include "Registros.h"
 #include "PreHash.h"
