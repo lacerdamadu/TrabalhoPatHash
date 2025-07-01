@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <time.h>
-
+//Ratos Moinhados + Ziviani adaptado
+// Ana Clara - 5896
+// Maria Eduarda - 5920
+// Rafael Resende - 5891
+// Pedro Miranda - 4912
 
 #include "Menu.h"
 #include "Hash.h"

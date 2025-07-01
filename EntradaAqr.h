@@ -3,6 +3,7 @@
 // Maria Eduarda - 5920
 // Rafael Resende - 5891
 // Pedro Miranda - 4912
+
 #ifndef ENTRADAAQR_H
 #define ENTRADAAQR_H
 

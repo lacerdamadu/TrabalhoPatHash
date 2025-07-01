@@ -7,8 +7,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "Tratamento.h"
-#include "PreHash.h"
-#include "Hash.h"
 
 // Remove pontuação, números, transforma em minúsculas
 void limpar_linha(char *linha) {

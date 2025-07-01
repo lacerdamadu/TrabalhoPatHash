@@ -1,3 +1,9 @@
+//Ratos Moinhados + Ziviani adaptado
+// Ana Clara - 5896
+// Maria Eduarda - 5920
+// Rafael Resende - 5891
+// Pedro Miranda - 4912
+
 #ifndef CALCULOTFIDF_H_
 #define CALCULOTFIDF_H_
 

@@ -1,8 +1,8 @@
 //Ratos Moinhados + Ziviani adaptado
 // Ana Clara - 5896
 // Maria Eduarda - 5920
-// Rafael Resende - 589*
-// Pedro Miranda - 4***
+// Rafael Resende - 5891
+// Pedro Miranda - 4912
 
 #include <stdlib.h>
 
