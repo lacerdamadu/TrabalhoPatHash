@@ -42,10 +42,10 @@ void Menu(){
                 break;
             case 1:
                 EntradaDeArquivo(&Armazenamento);
-                printf("aaaai\n");
                 break;
             case 2:
-                // EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash, PalavrasDistintas);
+                EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash,  &Armazenamento);
+                printf("aiiii\n");
                 break;
             case 3:
                 ImprimeOrd(ArvorePatricia);

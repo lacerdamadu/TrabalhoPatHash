@@ -8,6 +8,9 @@
 
 #define TamLin 256
 
+#include "Patricia.h"
+#include "Hash.h"
+
 typedef struct {
     Palavra NomedoArqEntrada;
     Palavra* Arquivo;
@@ -15,10 +18,6 @@ typedef struct {
     int* QuantPalavrasDistintas;
 } NomeEntradas;
 
-#define TamLinha 256
-
-#include "Patricia.h"
-#include "Hash.h"
 
 void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash, NomeEntradas* Armazenamento);
 void InicializaNomeEntradas(NomeEntradas* nomeentradas, int N);

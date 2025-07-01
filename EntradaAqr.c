@@ -19,23 +19,25 @@ void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash
     // printf("Documento de entrada: ");
 
     // scanf("%s", DocEntrada);
-    strcpy(DocEntrada, Armazenamento->Arquivo);
-
+    
+    // strcpy(DocEntrada, Armazenamento->NomedoArqEntrada);
+    
     DocEntrada[strcspn(DocEntrada, "\n")] = '\0';
 
     FILE *Arq = fopen(DocEntrada, "r");
-    if(!Arq) { perror("Erro ao abrir arquivo de entrada"); return; }
-   
+    if(!Arq) { printf("bosta\n");
+        perror("Erro ao abrir arquivo de entrada"); return; }
+
     int num_arquivos;
     if(fscanf(Arq, "%d\n", &num_arquivos) != 1) {
         fclose(Arq);
         return;
     }
-
-
-    for(int j = 0; j < Armazenamento->Quantidade; j++){
-        Armazenamento->QuantPalavrasDistintas[j] = 0;
-    }
+    
+    Armazenamento->QuantPalavrasDistintas = calloc(Armazenamento->Quantidade, sizeof(int));
+    // for(int j = 0; j < Armazenamento->Quantidade; j++){
+    //     Armazenamento->QuantPalavrasDistintas[j] = 0;
+    // }
 
     for(int j = 0; j < Armazenamento->Quantidade; j++){
         printf("tem %d palavras no doc %d\n", Armazenamento->QuantPalavrasDistintas[j], j);
@@ -92,14 +94,18 @@ void InicializaNomeEntradas(NomeEntradas* nomeentradas, int N){
     nomeentradas->Quantidade = N;
     nomeentradas->Arquivo = malloc(N * sizeof(char *));
     for (int i = 0; i < N; i++){
-        nomeentradas->Arquivo[i] = malloc(50 * sizeof(char));
+        nomeentradas[i].Arquivo = malloc(50 * sizeof(char));
     }
+
 }
 
 void EntradaDeArquivo(NomeEntradas* nomeentradas){
     char DocEntrada[TamLin];
     printf("Digite o arquivo de entrada: ");
     scanf("%s", DocEntrada);
+
+    strcpy(nomeentradas->NomedoArqEntrada, DocEntrada);
+
 
     FILE *ArquivoEntrada = fopen(DocEntrada, "r");
     if (ArquivoEntrada == NULL){
@@ -139,6 +145,6 @@ void EntradaDeArquivo(NomeEntradas* nomeentradas){
         }
     }
 
-    // fclose(ArquivoEntrada);
+    fclose(ArquivoEntrada);
 
 }
