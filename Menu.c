@@ -21,6 +21,7 @@ void Menu(){
     Hash TabelaHah[TamHash];
     SetTabelaHash(TabelaHah, TamHash);
     TipoArvore ArvorePatricia = NULL;
+    NomeEntradas Armazenamento;
     
     int *PalavrasDistintas;
 
@@ -40,13 +41,11 @@ void Menu(){
             case 0:
                 break;
             case 1:
-                printf("Não tem nada aqui ainda");
+                EntradaDeArquivo(&Armazenamento);
+                printf("aaaai\n");
                 break;
             case 2:
-                EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash, PalavrasDistintas);
-                for(int i = 0; i < 7; i++){
-                    printf("palavras distintas em %d: %d\n", i, PalavrasDistintas[i]);
-                }
+                // EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash, PalavrasDistintas);
                 break;
             case 3:
                 ImprimeOrd(ArvorePatricia);
