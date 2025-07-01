@@ -232,7 +232,6 @@ void TabelaHashInvertido(Hash* Celulas,int TamHASH){
         comeco = final;
     }
 
-    printf("Indice invertido\n");
     for (int i = 0; i < Count; i++)
         ImprimeRegistro(RG[i]);
 }

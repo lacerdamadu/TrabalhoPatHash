@@ -11,7 +11,7 @@
 #include "Registros.h"
 
 void ImprimeRegistro(Registro RG){
-    printf("      %s - <%d,%d>\n",RG.Palavra,RG.Quantidade,RG.Documento);
+    printf("%s - <%d,%d>\n",RG.Palavra,RG.Quantidade,RG.Documento);
 }
 
 void SetRegistro(Registro* RG,int Doc,char* Palavra){

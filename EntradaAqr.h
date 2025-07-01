@@ -11,16 +11,7 @@
 #include "Patricia.h"
 #include "Hash.h"
 
-typedef struct {
-    Palavra NomedoArqEntrada;
-    Palavra* Arquivo;
-    int Quantidade;
-    int* QuantPalavrasDistintas;
-} NomeEntradas;
 
-
-void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash, NomeEntradas* Armazenamento);
-void InicializaNomeEntradas(NomeEntradas* nomeentradas, int N);
-void EntradaDeArquivo(NomeEntradas* nomeentradas);
+void EntradaArquivos(TipoArvore *raiz, Hash* TabelaHash, int* Peso, int TamaHash);
 
 #endif

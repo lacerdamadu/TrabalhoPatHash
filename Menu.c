@@ -21,39 +21,32 @@ void Menu(){
     Hash TabelaHah[TamHash];
     SetTabelaHash(TabelaHah, TamHash);
     TipoArvore ArvorePatricia = NULL;
-    NomeEntradas Armazenamento;
     
     int *PalavrasDistintas;
 
-    printf("Bem-vinde ao sistema utilizado para o Estudo comparativo entre Árvore PATRICIA e Tabela HASH como estruturas para implementar arquivo invertido");
+    printf("Bem-vinde ao sistema utilizado para o Estudo comparativo entre Arvore PATRICIA e Tabela HASH como estruturas para implementar arquivo invertido");
     int escolha = -1;
     while(escolha != 0){
-        
-        printf("Escolha uma das seguintes opções:\n");
-        printf("(0) Terminar a execução do código\n"
-            "(1) Receber o arquivo de entrada com os textos a serem indexados;\n"
-            "(2) Construir os indices invertidos, a partir dos textos de entrada, usando os TADs PATRICIA e HASH;\n"
-            "(3) Imprimir os indices invertidos;\n"
-            "(4) Realizar buscas por um ou mais termo(s) de busca\n");
+        printf("Escolha uma das seguintes opcoes:\n");
+        printf("(0) Terminar a execucao do codigo\n"
+            "(1) Construir os indices invertidos, a partir dos textos de entrada, usando os TADs PATRICIA e HASH;\n"
+            "(2) Imprimir os indices invertidos na Hash;\n"
+            "(3) Imprimir os indices invertidos na Patricia\n");
 
         scanf("%d", &escolha);
         switch (escolha){
             case 0:
                 break;
             case 1:
-                EntradaDeArquivo(&Armazenamento);
+                EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash);
                 break;
             case 2:
-                EntradaArquivos(&ArvorePatricia, TabelaHah, Peso, TamHash,  &Armazenamento);
-                printf("aiiii\n");
-                break;
-            case 3:
-                ImprimeOrd(ArvorePatricia);
+                printf("--> Hash\n");
                 TabelaHashInvertido(TabelaHah, TamHash);
                 break;
-            case 4:
-                RealizarBusca(&ArvorePatricia, TabelaHah, Peso);
-                break;
+            case 3:
+                printf("--> Patricia\n");
+                ImprimeOrd(ArvorePatricia);
             default:
             break;
         }
@@ -68,7 +61,7 @@ void RealizarBusca(TipoArvore *ArvorePatricia, Hash *TabelaHash, int *Peso){
     scanf("%d", &NumTermosBusca);
     Palavra Termos[NumTermosBusca];
     for(int i=0; i<NumTermosBusca; i++){
-        printf("%da palavra:", &i);
+        printf("%d a palavra:", i);
         scanf("%s", Termos[i]);
     }
 
